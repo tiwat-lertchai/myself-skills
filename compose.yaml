@@ -1,0 +1,52 @@
+services:
+  skill-test:
+    image: ruby:3.3-alpine
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:ro
+    command:
+      - ruby
+      - -ryaml
+      - -e
+      - |
+        failed = false
+
+        Dir.glob("skills/*/SKILL.md").sort.each do |file|
+          content = File.read(file)
+          match = content.match(/\A---\n(.*?)\n---/m)
+
+          unless match
+            warn "#{file}: invalid YAML frontmatter delimiters"
+            failed = true
+            next
+          end
+
+          begin
+            frontmatter = YAML.safe_load(match[1])
+          rescue Psych::SyntaxError => error
+            warn "#{file}: invalid YAML: #{error.message}"
+            failed = true
+            next
+          end
+
+          name = frontmatter.is_a?(Hash) ? frontmatter["name"] : nil
+          description = frontmatter.is_a?(Hash) ? frontmatter["description"] : nil
+          allowed = %w[name description license allowed-tools metadata]
+          errors = []
+
+          errors << "frontmatter must be a mapping" unless frontmatter.is_a?(Hash)
+          errors << "unexpected frontmatter keys" if frontmatter.is_a?(Hash) && !(frontmatter.keys - allowed).empty?
+          errors << "invalid skill name" unless name.is_a?(String) && name.match?(/\A[a-z0-9]+(?:-[a-z0-9]+)*\z/) && name.length <= 64
+          errors << "folder and skill name differ" unless name == File.basename(File.dirname(file))
+          errors << "invalid description" unless description.is_a?(String) && !description.empty? && description.length <= 1024 && !description.include?("<") && !description.include?(">")
+          errors << "unfinished TODO placeholder" if content.match?(/^\s*\[TODO:[^\n]*\]\s*$/)
+
+          if errors.empty?
+            puts "#{file}: valid"
+          else
+            warn "#{file}: #{errors.join(", ")}"
+            failed = true
+          end
+        end
+
+        abort "Skill validation failed" if failed

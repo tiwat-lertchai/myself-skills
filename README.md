@@ -25,3 +25,11 @@ Skills เหล่านี้เป็นกรอบตัดสินใจ 
 คัดลอก skill directory ที่ต้องการไปยัง personal skills directory ของ Codex หรือใช้ตัวติดตั้ง Skill จาก GitHub path ของแต่ละ directory
 
 หลังแก้ไข Skill ให้ตรวจรูปแบบด้วย `quick_validate.py` จาก Skill Creator และปรับคำสั่งจากผลการใช้งานจริง ไม่เพิ่มกฎถาวรจากเหตุการณ์ครั้งเดียว
+
+หรือรันการตรวจทั้งหมดใน container โดยไม่ต้องติดตั้ง dependency บนเครื่อง:
+
+```sh
+docker compose run --rm skill-test
+```
+
+หากติดตั้ง Docker Compose แบบ standalone ให้ใช้ `docker-compose run --rm skill-test`
