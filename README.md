@@ -8,6 +8,7 @@
 - `skills/product-to-production/` — workflow หลักสำหรับงานตั้งแต่แนวคิดจนพร้อมส่ง
 - `skills/security-sensitive-change/` — งานที่มี security เป็นสาระสำคัญ
 - `skills/dependency-change/` — การเพิ่ม อัปเกรด หรือประเมิน dependency และเทคโนโลยีใหม่
+- `skills/evidence-research/` — การวิจัยเชิงหลักฐาน ตั้งคำถาม ประเมินแหล่งข้อมูล สังเคราะห์ข้อขัดแย้ง และอ้างอิงอย่างตรวจสอบได้
 
 รายละเอียดเฉพาะโปรเจกต์ เช่น architecture, business rules, package manager และคำสั่งตรวจสอบ ควรอยู่ใน `AGENTS.md` ของโปรเจกต์นั้น ไม่ควรนำมาใส่ใน personal Skills
 
@@ -19,6 +20,7 @@ Skills เหล่านี้เป็นกรอบตัดสินใจ 
 - งาน prototype ใช้โหมด prototype และหยุดเมื่อพิสูจน์สมมติฐานสำเร็จ
 - งาน productionization ให้เริ่มจากตรวจของเดิมและรักษาส่วนที่ดีอยู่แล้ว
 - ใช้ security หรือ dependency Skill เมื่อเรื่องนั้นเป็นสาระสำคัญของงาน
+- ใช้ `evidence-research` เมื่อต้องค้นคว้าหลายแหล่ง ประเมินคุณภาพหลักฐาน หรือจัดทำข้อสรุปที่ตรวจสอบย้อนกลับได้
 
 ## การติดตั้ง
 
